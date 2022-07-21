@@ -1,0 +1,221 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "בינה",
+    "description": "כאן ניתן לראות את הבקשות שניתן לשלוח לבינה"
+  },
+  "host": "binah-api.com",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/news": {
+      "get": {
+        "description": "Lists all the news",
+        "operationId": "getNews",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "news response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/news"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/terms": {
+      "get": {
+        "description": "Lists all the terms",
+        "operationId": "getTerms",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "terms response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/term"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/news/{word}/title": {
+        "get": {
+            "description": "returns the term description for the given word along with relevant news from the last week in case there is one",
+            "operationId": "find pet by word",
+            "parameters": [
+                {
+                    "name": "word",
+                    "in": "path",
+                    "description": "word of term to fetch",
+                    "required": true,
+                    "type": "string",
+                    "format": "str"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "term response",
+                    "schema": {
+                        "$ref": "#/definitions/termsAndNews"
+                    }
+                },
+                "default": {
+                    "description": "unexpected error",
+                    "schema": {
+                        "$ref": "#/definitions/Error"
+                    }
+                },
+                "/users": {
+                  "get": {
+                    "description": "Lists all the users",
+                    "operationId": "getUsers",
+                    "parameters": [],
+                    "responses": {
+                      "200": {
+                        "description": "users response",
+                        "schema": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/user"
+                          }
+                        }
+                      },
+                      "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                      },
+                "/users/{number}/name": {
+                  "get": {
+                    "description": "Lists the name of a user through its number",
+                    "operationId": "getUsers",
+                    "parameters": ["number"],
+                    "responses": {
+                      "200": {
+                        "description": "users response",
+                        "schema": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/userName"
+                          }
+                        }
+                      },
+                      "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                          "$ref": "#/definitions/Error"
+                        }
+                      }
+                    }
+                  }
+                }
+            }
+        }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "news": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    },
+    "term": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    },
+    "termAndNews": {
+      "type": "object",
+      "required": ["title"],
+      "properties": {
+        "explanation": {
+          "type": "string"
+        }
+      }
+    },
+    "user": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+            "name": {
+            "type": "string"
+            },
+            "studies": {
+            "type": "string"
+            },
+            "number": {
+            "type": "string"
+            },
+            "mail": {
+            "type": "string"
+        }
+      }
+    },
+    "userName": {
+        "type": "string",
+        "required": ["name"],
+        "properties": {
+            "name": {
+            "type": "string"
+            }
+      }
+    }
+    },
+    "Error": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
